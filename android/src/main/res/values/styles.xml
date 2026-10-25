@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="GDXTheme" parent="android:Theme.NoTitleBar.Fullscreen">
+        <!-- Полноэкранный режим безрамочного приложения -->
+    </style>
+</resources>
