@@ -1,3 +1,4 @@
+
 package com.cpu.cpumaker;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -9,140 +10,122 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class SiliconRoots extends ApplicationAdapter {
 
-private SpriteBatch batch;
-private BitmapFont font;
+    private SpriteBatch batch;
+    private BitmapFont font;
 
-private String errorMessage = null;
-private boolean initialized = false;
+    private float elapsed;
+    private boolean ready;
 
-@Override
-public void create() {
-    Gdx.app.log("SiliconRoots", "Starting game...");
+    @Override
+    public void create() {
+        Gdx.app.log("SiliconRoots", "Creating game...");
 
-    try {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
+        try {
+            batch = new SpriteBatch();
+            font = new BitmapFont();
 
-        font.setColor(Color.WHITE);
-        initialized = true;
+            font.getData().setScale(1.2f);
+            ready = true;
 
-        Gdx.app.log("SiliconRoots", "Game initialized successfully!");
-
-    } catch (Exception e) {
-        errorMessage = "Initialization error:\n"
-                + e.getClass().getSimpleName()
-                + "\n"
-                + String.valueOf(e.getMessage());
-
-        Gdx.app.error("SiliconRoots", errorMessage, e);
-
-        dispose();
+            Gdx.app.log("SiliconRoots", "Game started.");
+        } catch (RuntimeException e) {
+            Gdx.app.error("SiliconRoots", "Startup failed.", e);
+            dispose();
+            throw e;
+        }
     }
-}
 
-@Override
-public void render() {
-    try {
-        ScreenUtils.clear(0.10f, 0.12f, 0.17f, 1f);
+    @Override
+    public void render() {
+        ScreenUtils.clear(0.035f, 0.055f, 0.10f, 1f);
 
-        if (batch == null || font == null) {
+        if (!ready || batch == null || font == null) {
             return;
         }
 
+        elapsed += Gdx.graphics.getDeltaTime();
+
         batch.begin();
 
-        if (errorMessage != null) {
-            font.setColor(Color.RED);
-            font.draw(
-                    batch,
-                    errorMessage,
-                    20,
-                    Gdx.graphics.getHeight() - 30,
-                    Gdx.graphics.getWidth() - 40,
-                    8,
-                    true
-            );
+        float x = 28f;
+        float y = Gdx.graphics.getHeight() - 36f;
 
-        } else if (initialized) {
-            font.setColor(Color.WHITE);
+        font.setColor(Color.CYAN);
+        font.draw(batch, "SILICON ROOTS", x, y);
 
-            font.draw(
-                    batch,
-                    "Silicon Roots",
-                    30,
-                    Gdx.graphics.getHeight() - 50
-            );
+        y -= 42f;
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Engine: LibGDX", x, y);
 
-            font.setColor(Color.GREEN);
+        y -= 30f;
+        font.draw(
+            batch,
+            "Status: Running",
+            x,
+            y
+        );
 
-            font.draw(
-                    batch,
-                    "Game started successfully!",
-                    30,
-                    Gdx.graphics.getHeight() - 90
-            );
+        y -= 30f;
+        font.draw(
+            batch,
+            "FPS: " + Gdx.graphics.getFramesPerSecond(),
+            x,
+            y
+        );
 
-            font.setColor(Color.LIGHT_GRAY);
+        y -= 30f;
+        font.draw(
+            batch,
+            "Screen: " + Gdx.graphics.getWidth()
+                + " x " + Gdx.graphics.getHeight(),
+            x,
+            y
+        );
 
-            font.draw(
-                    batch,
-                    "LibGDX Android test",
-                    30,
-                    Gdx.graphics.getHeight() - 130
-            );
-        }
+        y -= 30f;
+        font.draw(
+            batch,
+            "Uptime: " + (int) elapsed + " sec",
+            x,
+            y
+        );
+
+        y -= 48f;
+        font.setColor(Color.GREEN);
+        font.draw(
+            batch,
+            "If you see this, rendering works!",
+            x,
+            y
+        );
 
         batch.end();
+    }
 
-    } catch (Exception e) {
-        Gdx.app.error("SiliconRoots", "Rendering error", e);
+    @Override
+    public void pause() {
+        Gdx.app.log("SiliconRoots", "Paused.");
+    }
 
-        if (batch != null && batch.isDrawing()) {
-            batch.end();
+    @Override
+    public void resume() {
+        Gdx.app.log("SiliconRoots", "Resumed.");
+    }
+
+    @Override
+    public void dispose() {
+        ready = false;
+
+        if (batch != null) {
+            batch.dispose();
+            batch = null;
         }
 
-        errorMessage = "Rendering error:\n"
-                + e.getClass().getSimpleName()
-                + "\n"
-                + String.valueOf(e.getMessage());
+        if (font != null) {
+            font.dispose();
+            font = null;
+        }
 
-        initialized = false;
+        Gdx.app.log("SiliconRoots", "Resources released.");
     }
-}
-
-@Override
-public void resize(int width, int height) {
-    Gdx.app.log(
-            "SiliconRoots",
-            "Screen size: " + width + "x" + height
-    );
-}
-
-@Override
-public void pause() {
-    Gdx.app.log("SiliconRoots", "Game paused");
-}
-
-@Override
-public void resume() {
-    Gdx.app.log("SiliconRoots", "Game resumed");
-}
-
-@Override
-public void dispose() {
-    if (batch != null) {
-        batch.dispose();
-        batch = null;
-    }
-
-    if (font != null) {
-        font.dispose();
-        font = null;
-    }
-
-    initialized = false;
-
-    Gdx.app.log("SiliconRoots", "Resources released");
-}
-
 }
