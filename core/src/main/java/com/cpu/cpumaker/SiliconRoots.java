@@ -11,6 +11,7 @@ import com.cpu.cpumaker.values.Values;
 import com.cpu.cpumaker.utils.Resize;
 import com.cpu.cpumaker.sprites.SpriteManager;
 import com.cpu.cpumaker.musical.SoundManager;
+import com.cpu.cpumaker.particles.ParticleSystem;
 
 public class SiliconRoots extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -18,9 +19,9 @@ public class SiliconRoots extends ApplicationAdapter {
     
     private SpriteManager spriteManager;
     private SoundManager soundManager;
+    private ParticleSystem particleSystem;
     
-    private Rectangle deskBounds;
-    private Rectangle objectBounds;
+    private Rectangle crystalBounds; // Зона кристалла (и для клика, и для отрисовки рамки)
     
     private Rectangle shopButtonBounds;
     private Rectangle backButtonBounds;
@@ -36,14 +37,15 @@ public class SiliconRoots extends ApplicationAdapter {
         soundManager = new SoundManager();
         soundManager.load();
 
-        // Запуск фоновой музыки главного меню
+        particleSystem = new ParticleSystem();
+
         soundManager.menuMusic.play();
 
         float screenW = Gdx.graphics.getWidth();
         float screenH = Gdx.graphics.getHeight();
 
-        deskBounds = Resize.getScaledBounds(192f, 96f, 3.5f, screenW, screenH);
-        objectBounds = Resize.getScaledBounds(64f, 32f, 4.0f, screenW, screenH);
+        // Размер и позиция кристалла по центру экрана
+        crystalBounds = Resize.getScaledBounds(96f, 96f, 3.5f, screenW, screenH);
 
         shopButtonBounds = new Rectangle(screenW - 160f, screenH - 70f, 140f, 50f);
         backButtonBounds = new Rectangle(30f, screenH - 70f, 140f, 50f);
@@ -51,8 +53,11 @@ public class SiliconRoots extends ApplicationAdapter {
 
     @Override
     public void render() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
         float screenW = Gdx.graphics.getWidth();
         float screenH = Gdx.graphics.getHeight();
+
+        particleSystem.update(deltaTime);
 
         if (Gdx.input.justTouched()) {
             float touchX = Gdx.input.getX();
@@ -62,19 +67,20 @@ public class SiliconRoots extends ApplicationAdapter {
                 if (shopButtonBounds.contains(touchX, touchY)) {
                     Values.inShop = true;
                     soundManager.playClick();
-                    // Переключаем музыку при входе в магазин
                     soundManager.menuMusic.pause();
                     soundManager.shopMusic.play();
-                } else if (objectBounds.contains(touchX, touchY)) {
+                } 
+                // Клик именно по кристаллу процессора!
+                else if (crystalBounds.contains(touchX, touchY)) {
                     Values.transistorCount++;
                     Values.dollars += Values.getCurrentProfit();
                     soundManager.playClick();
+                    particleSystem.spawn(touchX, touchY, 8);
                 }
             } else {
                 if (backButtonBounds.contains(touchX, touchY)) {
                     Values.inShop = false;
                     soundManager.playClick();
-                    // Возвращаем музыку меню
                     soundManager.shopMusic.pause();
                     soundManager.menuMusic.play();
                 }
@@ -86,30 +92,46 @@ public class SiliconRoots extends ApplicationAdapter {
 
         batch.begin();
 
-        if (!Values.inShop) {
-            // Рисуем верстак (desk)
-            batch.draw(spriteManager.desk, deskBounds.x, deskBounds.y, deskBounds.width, deskBounds.height);
+        // 1. ФОН: Стол на весь экран
+        batch.draw(spriteManager.desk, 0, 0, screenW, screenH);
 
-            // Транзисторы с авто-ресайзом
+        if (!Values.inShop) {
+            // 2. РИСУЕМ КРИСТАЛЛ ПРОЦЕССОРА (основа, куда всё помещается)
+            batch.draw(spriteManager.crystal, crystalBounds.x, crystalBounds.y, crystalBounds.width, crystalBounds.height);
+
+            // 3. ТРАНЗИСТОРЫ С АВТО-РЕСАЙЗОМ ВНУТРИ КРИСТАЛЛА
             long count = Math.max(1, Values.transistorCount);
-            float scale = Math.max(0.12f, 1.0f / (1.0f + 0.07f * (count - 1)));
             
-            float itemW = objectBounds.width * scale;
-            float itemH = objectBounds.height * scale;
+            // Чем больше транзисторов, тем сильнее они уменьшаются, чтобы поместиться внутри crystalBounds
+            float scale = Math.max(0.15f, 1.0f / (1.0f + 0.05f * (count - 1)));
+            
+            float itemW = 32f * scale;
+            float itemH = 32f * scale;
+
+            // Смещаем начальную позицию отрисовки внутрь кристалла с отступом
+            float padding = 15f * (crystalBounds.width / 96f);
+            float startX = crystalBounds.x + padding;
+            float startY = crystalBounds.y + crystalBounds.height - padding - itemH;
 
             int cols = (int) Math.sqrt(count) + 1;
-            for (int i = 0; i < Math.min(count, 150); i++) {
+            for (int i = 0; i < Math.min(count, 200); i++) {
                 int r = i / cols;
                 int c = i % cols;
                 
-                float posX = objectBounds.x + c * (itemW + 1f);
-                float posY = objectBounds.y + r * (itemH + 1f);
+                float posX = startX + c * (itemW + 2f);
+                float posY = startY - r * (itemH + 2f);
 
-                batch.draw(spriteManager.transistors, posX, posY, itemW, itemH);
+                // Если транзисторы не вылазят за границы кристалла — рисуем
+                if (posY >= crystalBounds.y + padding) {
+                    batch.draw(spriteManager.transistors, posX, posY, itemW, itemH);
+                }
             }
 
+            // Частицы (искры)
+            particleSystem.draw(batch, spriteManager.uiPixel);
+
             // Кнопка Магазин
-            batch.setColor(0.2f, 0.22f, 0.3f, 1f);
+            batch.setColor(0.2f, 0.22f, 0.3f, 0.9f);
             batch.draw(spriteManager.uiPixel, shopButtonBounds.x, shopButtonBounds.y, shopButtonBounds.width, shopButtonBounds.height);
             batch.setColor(1, 1, 1, 1);
 
@@ -118,7 +140,7 @@ public class SiliconRoots extends ApplicationAdapter {
 
         } else {
             // Окно магазина
-            batch.setColor(0.12f, 0.12f, 0.16f, 1f);
+            batch.setColor(0.12f, 0.12f, 0.16f, 0.95f);
             batch.draw(spriteManager.uiPixel, 50f, 50f, screenW - 100f, screenH - 120f);
             batch.setColor(1, 1, 1, 1);
 
@@ -155,4 +177,4 @@ public class SiliconRoots extends ApplicationAdapter {
         spriteManager.dispose();
         soundManager.dispose();
     }
-}
+            }
