@@ -3,14 +3,14 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
+        android:label="Silicon Roots"
         android:supportsRtl="true"
-        android:theme="@style/GDXTheme">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         
         <activity
             android:name="com.cpu.cpumaker.AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-            android:label="@string/app_name"
+            android:label="Silicon Roots"
             android:screenOrientation="landscape"
             android:exported="true">
             
