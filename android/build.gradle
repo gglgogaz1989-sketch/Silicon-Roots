@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+ext {
+    gdxVersion = '1.12.0' // Версия LibGDX (если у тебя другая, можно просто поменять здесь)
+}
+
 android {
     namespace 'com.cpu.cpumaker'
     compileSdkVersion 33
