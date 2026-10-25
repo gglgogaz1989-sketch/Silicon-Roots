@@ -1,21 +1,104 @@
-MIT License
+================================================================================
+                       SILICON ROOTS - END USER & CODE LICENSE
+                             COPYRIGHT (C) 2026 KOSTYA
+                               ALL RIGHTS RESERVED
+================================================================================
 
-Copyright (c) 2026 gglgog
+PREAMBLE & INTENT:
+This repository contains the source code, game assets, audio files, textures, 
+build configurations, and binary distributions for the software project known 
+as "Silicon Roots" (hereinafter referred to as "the Software").
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This License Agreement is a legal contract strictly regulating the terms of use, 
+access, downloading, execution, and viewing of the Software. By downloading, 
+cloning, viewing, executing, or inspecting any part of this repository, you 
+agree to be bound by all terms, restrictions, and prohibitions set forth below.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+--------------------------------------------------------------------------------
+SECTION 1. PERMITTED RIGHTS AND USES (WHAT YOU CAN DO)
+--------------------------------------------------------------------------------
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+1.1. Personal Gameplay & Execution:
+     - You are granted a non-exclusive, non-transferable, revocable right to download 
+       the official pre-compiled binary releases (.apk, .jar, .exe, .ipa) published 
+       directly by the original author (Kostya) in the official GitHub Releases.
+     - You may run and play the Software on personal computers, mobile devices, 
+       and hardware owned or controlled by you for private, non-commercial entertainment.
+
+1.2. Source Code Inspection & Educational Viewing:
+     - You are permitted to view and inspect the Java source code, layout scripts, 
+       and configuration files exclusively within this official GitHub repository 
+       for educational, analytical, and self-learning purposes.
+
+--------------------------------------------------------------------------------
+SECTION 2. ABSOLUTE PROHIBITIONS AND RESTRICTIONS (WHAT YOU CANNOT DO)
+--------------------------------------------------------------------------------
+
+2.1. STRICT PROHIBITION ON FORKING AND CLONING ("NO-FORK POLICY"):
+     - You SHALL NOT create any public or private forks (using the GitHub Fork feature 
+       or any equivalent Git repository cloning system) of this Software.
+     - You SHALL NOT mirror, host, or re-upload this repository or any sub-tree of 
+       this codebase to GitHub, GitLab, Bitbucket, Gitea, SourceForge, or any other 
+       version control platform.
+
+2.2. STRICT PROHIBITION ON MODIFICATION & DERIVATIVE WORKS:
+     - You SHALL NOT modify, alter, translate, refactor, decompile, reverse-engineer, 
+       patch, adapt, transform, or build derivative works based upon the source code, 
+       graphics, audio tracks, textures, or design logic of the Software.
+     - No modified versions, hacks, mods, or unofficial builds may be created, 
+       compiled, or distributed under any circumstances.
+
+2.3. STRICT PROHIBITION ON REDISTRIBUTION:
+     - You SHALL NOT distribute, re-host, upload, share, mirror, or publish the 
+       pre-compiled binaries (.apk, .jar, etc.) or source code files on third-party 
+       websites, file hosting platforms, app stores, forums, or cloud services.
+     - All downloads must originate strictly from the official GitHub Releases page 
+       controlled by the original author (Kostya).
+
+2.4. STRICT PROHIBITION ON COMMERCIALIZATION AND MONETIZATION:
+     - The Software, its source code, assets, audio files, and compiled builds are 
+       STRICTLY NON-COMMERCIAL.
+     - You SHALL NOT sell, lease, rent, license, sub-license, monetize via paywalls, 
+       include in commercial bundles, or monetize through advertisements (in-app 
+       ads, banner ads, interstitial ads, or video ads) any part of this Software 
+       or its derivatives.
+
+2.5. ASSET AND AUDIO PROTECTION:
+     - All custom graphics, pixel-art sprites (including crystal textures, workbench 
+       backgrounds, transistor sprites, UI frames), sound effects (laser, clicks), 
+       and audio tracks (Menu_of_cpu.ogg, Shop.ogg) contained within this project 
+       are proprietary assets belonging to Kostya.
+     - You SHALL NOT extract, reuse, repurpose, or include these assets in any 
+       other game, project, application, media, or video production.
+
+--------------------------------------------------------------------------------
+SECTION 3. DISCLAIMER OF WARRANTY & LIMITATION OF LIABILITY
+--------------------------------------------------------------------------------
+
+3.1. "AS IS" PROVIDING:
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+     FITNESS FOR A PARTICULAR PURPOSE, PERFORMANCE, OR NON-INFRINGEMENT.
+
+3.2. NO LIABILITY:
+     IN NO EVENT SHALL THE AUTHOR (KOSTYA) BE LIABLE FOR ANY CLAIM, DAMAGES, 
+     HARDWARE FAILURE, DATA LOSS, OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
+     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH 
+     THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+SECTION 4. TERMINATION AND GOVERNING LAW
+--------------------------------------------------------------------------------
+
+4.1. Immediate Termination:
+     Any breach of Section 2 of this License immediately and automatically 
+     terminates all granted rights. Upon termination, you must destroy all copies 
+     of the source code, compiled binaries, and assets in your possession.
+
+4.2. Ownership:
+     All rights, title, copyright, intellectual property rights, and ownership of 
+     "Silicon Roots" remain exclusively with the creator (Kostya).
+
+================================================================================
+                   THANK YOU FOR PLAYING AND RESPECTING THE CODE!
+================================================================================
