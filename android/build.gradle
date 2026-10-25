@@ -1,68 +1,32 @@
-apply plugin: 'com.android.application'
-
 android {
     namespace 'com.cpu.cpumaker'
-    compileSdk 33
+    compileSdkVersion 33
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            // Подключаем ассеты из core/src/main/assets/ напрямую в APK
+            assets.srcDirs = ['src/main/assets', '../core/src/main/assets']
+            jniLibs.srcDirs = ['src/main/libs']
+        }
+    }
 
     defaultConfig {
-        applicationId 'cpu.cpumaker.siliconroots'
-        minSdk 21
-        targetSdk 33
+        applicationId 'com.cpu.cpumaker'
+        minSdkVersion 19
+        targetSdkVersion 33
         versionCode 1
-        versionName "1.0-firstbeta"
+        versionName "1.0"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    
-    sourceSets {
-        main {
-            assets.srcDirs = ['../core/assets']
-        }
-    }
-}
-
-configurations {
-    natives
-}
-
-dependencies {
-    implementation project(':core')
-    
-    api "com.badlogicgames.gdx:gdx-backend-android:1.12.1"
-    
-    natives "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a"
-    natives "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-armeabi-v7a"
-    natives "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86"
-    natives "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86_64"
-}
-
-task copyAndroidNatives {
-    doFirst {
-        file("libs/arm64-v8a/").mkdirs()
-        file("libs/armeabi-v7a/").mkdirs()
-        file("libs/x86/").mkdirs()
-        file("libs/x86_64/").mkdirs()
-
-        configurations.natives.copy().files.each { jar ->
-            def outputDir = null
-            if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
-            if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-            if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-            if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-            if (outputDir != null) {
-                project.zipTree(jar).matching { include "*.so" }.files.each { file ->
-                    ant.copy(file: file, todir: outputDir)
-                }
-            }
-        }
-    }
-}
-
-tasks.matching { it.name.contains("merge") || it.name.contains("lint") }.configureEach { task ->
-    task.dependsOn 'copyAndroidNatives'
 }
