@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+}
+
+rootProject.name = 'SiliconRoots'
+
+// Оставляем только ядро и андроид-модуль
+include 'core', 'android'
