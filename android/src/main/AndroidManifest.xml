@@ -10,17 +10,17 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
-        <activity
-            android:name="com.cpu.cpumaker.AndroidLauncher"
-            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
-            android:label="Silicon Roots"
-            android:screenOrientation="portrait">
-            
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
+    <activity
+        android:name="com.cpu.cpumaker.AndroidLauncher"
+        android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+        android:label="Silicon Roots"
+        android:screenOrientation="landscape"> <!-- Установили альбомную ориентацию -->
+    
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+ </application>
+    
 </manifest>
