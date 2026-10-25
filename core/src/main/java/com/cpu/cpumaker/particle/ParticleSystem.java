@@ -1,54 +1,100 @@
+
 package com.cpu.cpumaker.particles;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParticleSystem {
+
     private static class Particle {
-        float x, y, vx, vy, life, maxLife;
+        float x;
+        float y;
+        float vx;
+        float vy;
+        float life;
+        float maxLife;
+        float size;
     }
 
     private final List<Particle> particles = new ArrayList<>();
 
-    // Спавн искр при клике
     public void spawn(float x, float y, int count) {
-        for (int i = 0; i < count; i++) {
+        int safeCount = Math.max(0, Math.min(count, 500));
+
+        for (int i = 0; i < safeCount; i++) {
             Particle p = new Particle();
+
             p.x = x;
             p.y = y;
-            float angle = MathUtils.random(0, 2 * MathUtils.PI);
+
+            float angle = MathUtils.random(
+                0f,
+                MathUtils.PI2
+            );
+
             float speed = MathUtils.random(60f, 180f);
+
             p.vx = MathUtils.cos(angle) * speed;
             p.vy = MathUtils.sin(angle) * speed;
+
             p.life = 0f;
-            p.maxLife = MathUtils.random(0.3f, 0.6f);
+            p.maxLife = MathUtils.random(0.3f, 0.8f);
+            p.size = MathUtils.random(2f, 6f);
+
             particles.add(p);
         }
     }
 
-    // Обновление положения частиц каждый кадр
     public void update(float delta) {
+        float dt = MathUtils.clamp(delta, 0f, 0.1f);
+
         for (int i = particles.size() - 1; i >= 0; i--) {
             Particle p = particles.get(i);
-            p.x += p.vx * delta;
-            p.y += p.vy * delta;
-            p.life += delta;
+
+            p.x += p.vx * dt;
+            p.y += p.vy * dt;
+            p.life += dt;
+
             if (p.life >= p.maxLife) {
                 particles.remove(i);
             }
         }
     }
 
-    // Отрисовка искр с затуханием (альфа-каналом)
     public void draw(SpriteBatch batch, Texture pixelTexture) {
-        for (Particle p : particles) {
-            float alpha = 1.0f - (p.life / p.maxLife);
-            batch.setColor(1f, 0.85f, 0.3f, alpha); // Теплый искрящийся цвет
-            batch.draw(pixelTexture, p.x, p.y, 5f, 5f);
+        if (batch == null || pixelTexture == null) {
+            return;
         }
-        batch.setColor(1, 1, 1, 1); // Сброс цвета
+
+        for (Particle p : particles) {
+            float alpha = MathUtils.clamp(
+                1f - p.life / p.maxLife,
+                0f,
+                1f
+            );
+
+            batch.setColor(1f, 0.75f, 0.2f, alpha);
+
+            batch.draw(
+                pixelTexture,
+                p.x,
+                p.y,
+                p.size,
+                p.size
+            );
+        }
+
+        batch.setColor(1f, 1f, 1f, 1f);
+    }
+
+    public void clear() {
+        particles.clear();
+    }
+
+    public int getParticleCount() {
+        return particles.size();
     }
 }
