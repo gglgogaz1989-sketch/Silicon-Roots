@@ -9,5 +9,4 @@ pluginManagement {
 
 rootProject.name = 'SiliconRoots'
 
-// Оставляем только ядро и андроид-модуль
 include 'core', 'android'
