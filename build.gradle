@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        // Плагин Android Gradle для сборки APK
+        classpath 'com.android.tools.build:gradle:7.4.2'
+    }
+}
+
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+        google()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+configure(subprojects) {
+    version = '1.0-firstbeta'
+    ext.appName = 'Silicon Roots'
+}
+
+subprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+project(':core') {
+    apply plugin: 'java-library'
+    
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:1.12.1"
+    }
+}
