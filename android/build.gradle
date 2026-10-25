@@ -12,7 +12,7 @@ android {
             aidl.srcDirs = ['src/main/java']
             renderscript.srcDirs = ['src/main/java']
             res.srcDirs = ['src/main/res']
-            // Gradle сам найдет AndroidManifest.xml в src/main/
+            // Подключаем ассеты из core/src/main/assets/
             assets.srcDirs = ['src/main/assets', '../core/src/main/assets']
             jniLibs.srcDirs = ['src/main/libs']
         }
@@ -32,4 +32,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+dependencies {
+    // Подключаем основной игровой модуль
+    implementation project(':core')
+    
+    // Подключаем Android-бэкенд LibGDX
+    implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+    
+    // Нативные библиотеки под разные архитектуры процессоров
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
 }
