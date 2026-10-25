@@ -6,18 +6,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.cpu.cpumaker.utils.Resize;
 
 public class SpriteManager {
-    public Texture workbench;
-    public Texture transistor;
+    // Точные пути к файлам из твоего GitHub
+    private static final String DESK_FILE = "other/desk.png";
+    private static final String TRANSISTORS_FILE = "other/transistors.png";
+    private static final String COIN_FILE = "values/coin.png";
+
+    public Texture desk;
+    public Texture transistors;
     public Texture coin;
     public Texture uiPixel;
 
     public void load() {
-        workbench = new Texture(Gdx.files.internal("workbench.png"));
-        transistor = new Texture(Gdx.files.internal("black_transistor.png"));
-        coin = new Texture(Gdx.files.internal("coin.png"));
+        desk = new Texture(Gdx.files.internal(DESK_FILE));
+        transistors = new Texture(Gdx.files.internal(TRANSISTORS_FILE));
+        coin = new Texture(Gdx.files.internal(COIN_FILE));
 
-        Resize.applyPixelFilter(workbench);
-        Resize.applyPixelFilter(transistor);
+        Resize.applyPixelFilter(desk);
+        Resize.applyPixelFilter(transistors);
         Resize.applyPixelFilter(coin);
 
         // Программная текстура для кнопок UI
@@ -29,8 +34,8 @@ public class SpriteManager {
     }
 
     public void dispose() {
-        workbench.dispose();
-        transistor.dispose();
+        desk.dispose();
+        transistors.dispose();
         coin.dispose();
         uiPixel.dispose();
     }
